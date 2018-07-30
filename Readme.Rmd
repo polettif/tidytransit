@@ -22,14 +22,18 @@ devtools::install_github('r-transit/tidytransit')
 
 ## Examples
 
+Load the packages using tidytransit
+
+```{r, message=FALSE, warning=FALSE, results='hide'}
+library(tidytransit)
+library(dplyr)
+```
+
 ### Reading GTFS Data into R
 
 Fetch data for a bus system in Accra, Ghana from GitHub. 
 
 ```{r, message=FALSE, warning=FALSE, results='hide'}
-library(trread)
-library(dplyr)
-
 accra_gtfs <- import_gtfs("https://github.com/AFDLab4Dev/AccraMobility/raw/master/GTFS/GTFS_Accra.zip")
 ```
 
@@ -111,3 +115,9 @@ library(mapview)
 stops_sf <- NYC$sf_stops
 qtm(stops_sf)
 ```
+
+## How GTFS Tables are Related
+
+[Danny Whalen](https://github.com/invisiblefunnel) made a nice graph of the relationships among gtfs tables in the [partidge](https://github.com/remix/partridge) package for Python, copied below. This can be a very helpful guide as you try to get a grasp on the kinds of questions you might want to ask of transit schedule data. 
+
+![gtfs-relationship-diagram](images/dependency-graph.png)
