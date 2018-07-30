@@ -1,0 +1,113 @@
+---
+title: "tidytransit"
+output: 
+  github_document:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Installation
+
+You can install this package from github using `devtools`:
+
+```{r, eval=FALSE}
+if (!require(devtools)) {
+    install.packages('devtools')
+}
+devtools::install_github('r-transit/tidytransit')
+```
+
+## Examples
+
+### Reading GTFS Data into R
+
+Fetch data for a bus system in Accra, Ghana from GitHub. 
+
+```{r, message=FALSE, warning=FALSE, results='hide'}
+library(trread)
+library(dplyr)
+
+accra_gtfs <- import_gtfs("https://github.com/AFDLab4Dev/AccraMobility/raw/master/GTFS/GTFS_Accra.zip")
+```
+
+Count and list the number of stops per route. 
+
+```{r}
+attach(accra_gtfs)
+
+routes_df %>% inner_join(trips_df, by="route_id") %>%
+  inner_join(stop_times_df) %>% 
+    inner_join(stops_df, by="stop_id") %>% 
+      group_by(route_long_name) %>%
+        summarise(stop_count=n_distinct(stop_id)) %>%
+  arrange(desc(stop_count))
+```
+
+### Calculate Headways
+
+#### Import Data
+
+We'll use NYC MTA subway data to demonstrate headway calculations, pulling directly from their URL.
+
+```{r, message=FALSE, warning=FALSE, results='hide'}
+NYC <- import_gtfs("http://web.mta.info/developers/data/nyct/subway/google_transit.zip")
+```
+
+### Headway Statistics along a Route
+
+List the routes with the shortest median headways. 
+
+```{r}
+route_frequency_summary <- route_frequency(NYC) %>%
+  arrange(median_headways)
+
+head(route_frequency_summary)
+```
+
+### Stop Headway Statistics
+
+List the stops with the shortest headways in the system. 
+
+```{r}
+stop_frequency_summary <- stop_frequency(NYC, by_route=FALSE) %>%
+  inner_join(NYC$stops_df) %>%
+    select(stop_name, headway) %>%
+      arrange(headway)
+
+head(stop_frequency_summary)
+```
+
+### Map Data
+
+We can add map data to the feed by joining the shapes together around routes. 
+
+Lets see whats in the feed. 
+
+```{r}
+print(names(NYC))
+```
+
+Now lets turn the routes and stops tables in `simple features` data frames:
+
+```{r}
+NYC <- gtfs_as_sf(NYC)
+```
+
+Now we can map routes using a map package like `tmap`:
+
+```{r map1, echo=FALSE}
+library(tmap)
+routes_sf <- NYC$sf_routes
+qtm(routes_sf)
+```
+
+We can also explore them interactively with a package like `mapview`
+
+```{r map2, echo=FALSE}
+library(mapview)
+stops_sf <- NYC$sf_stops
+qtm(stops_sf)
+```
