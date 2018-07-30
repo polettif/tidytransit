@@ -1,6 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^README\.Rmd$
 ^README-.*\.png$
 ^\.travis\.yml$
 ^cran-comments\.md$
@@ -8,4 +7,6 @@
 ^docs$
 ^_pkgdown\.yml$
 ^codecov\.yml$
-^\.github$
+^\images
+^Readme_files
+^readme.md

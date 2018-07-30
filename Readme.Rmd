@@ -24,7 +24,7 @@ devtools::install_github('r-transit/tidytransit')
 
 Load the packages using tidytransit
 
-```{r, message=FALSE, warning=FALSE, results='hide'}
+```{r, message=FALSE, warning=FALSE, results='hide', eval=FALSE}
 library(tidytransit)
 library(dplyr)
 ```
@@ -33,13 +33,13 @@ library(dplyr)
 
 Fetch data for a bus system in Accra, Ghana from GitHub. 
 
-```{r, message=FALSE, warning=FALSE, results='hide'}
+```{r, message=FALSE, warning=FALSE, results='hide', eval=FALSE}
 accra_gtfs <- import_gtfs("https://github.com/AFDLab4Dev/AccraMobility/raw/master/GTFS/GTFS_Accra.zip")
 ```
 
 Count and list the number of stops per route. 
 
-```{r}
+```{r, eval=FALSE}
 attach(accra_gtfs)
 
 routes_df %>% inner_join(trips_df, by="route_id") %>%
@@ -56,7 +56,7 @@ routes_df %>% inner_join(trips_df, by="route_id") %>%
 
 We'll use NYC MTA subway data to demonstrate headway calculations, pulling directly from their URL.
 
-```{r, message=FALSE, warning=FALSE, results='hide'}
+```{r, message=FALSE, warning=FALSE, results='hide', eval=FALSE}
 NYC <- import_gtfs("http://web.mta.info/developers/data/nyct/subway/google_transit.zip")
 ```
 
@@ -64,7 +64,7 @@ NYC <- import_gtfs("http://web.mta.info/developers/data/nyct/subway/google_trans
 
 List the routes with the shortest median headways. 
 
-```{r}
+```{r, eval=FALSE}
 route_frequency_summary <- route_frequency(NYC) %>%
   arrange(median_headways)
 
@@ -75,7 +75,7 @@ head(route_frequency_summary)
 
 List the stops with the shortest headways in the system. 
 
-```{r}
+```{r, eval=FALSE}
 stop_frequency_summary <- stop_frequency(NYC, by_route=FALSE) %>%
   inner_join(NYC$stops_df) %>%
     select(stop_name, headway) %>%
@@ -90,19 +90,19 @@ We can add map data to the feed by joining the shapes together around routes.
 
 Lets see whats in the feed. 
 
-```{r}
+```{r, eval=FALSE}
 print(names(NYC))
 ```
 
 Now lets turn the routes and stops tables in `simple features` data frames:
 
-```{r}
+```{r, eval=FALSE}
 NYC <- gtfs_as_sf(NYC)
 ```
 
 Now we can map routes using a map package like `tmap`:
 
-```{r map1, echo=FALSE}
+```{r map1, eval=FALSE}
 library(tmap)
 routes_sf <- NYC$sf_routes
 qtm(routes_sf)
@@ -110,14 +110,8 @@ qtm(routes_sf)
 
 We can also explore them interactively with a package like `mapview`
 
-```{r map2, echo=FALSE}
+```{r map2, eval=FALSE}
 library(mapview)
 stops_sf <- NYC$sf_stops
 qtm(stops_sf)
 ```
-
-## How GTFS Tables are Related
-
-[Danny Whalen](https://github.com/invisiblefunnel) made a nice graph of the relationships among gtfs tables in the [partidge](https://github.com/remix/partridge) package for Python, copied below. This can be a very helpful guide as you try to get a grasp on the kinds of questions you might want to ask of transit schedule data. 
-
-![gtfs-relationship-diagram](images/dependency-graph.png)

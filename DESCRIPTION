@@ -1,7 +1,7 @@
 Package: tidytransit
 Type: Package
 Title: Easily Install and Load packages to Work With the General Transit Feed Specification
-Version: 0.1.1
+Version: 0.1.3
 Authors@R: c(person("Tom", "Buckley", role = c("aut", "cre"), email = "tom@tbuckl.com"))
 Maintainer: Tom Buckley <tom@tbuckl.com>
 Description: 'tidytransit' is a set of packages that work in harmony
