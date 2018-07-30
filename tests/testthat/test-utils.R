@@ -1,7 +1,7 @@
 context("test-utils.R")
 
-test_that("tidyverse packages returns character vector of package names", {
-  out <- tidyverse_packages()
+test_that("tidytransit packages returns character vector of package names", {
+  out <- tidytransit_packages()
   expect_type(out, "character")
-  expect_true("ggplot2" %in% out)
+  expect_true("trread" %in% out)
 })

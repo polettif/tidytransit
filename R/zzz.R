@@ -4,11 +4,11 @@
     return()
 
   crayon::num_colors(TRUE)
-  tidyverse_attach()
+  tidytransit_attach()
 
   if (!"package:conflicted" %in% search()) {
-    x <- tidyverse_conflicts()
-    msg(tidyverse_conflict_message(x), startup = TRUE)
+    x <- tidytransit_conflicts()
+    msg(tidytransit_conflict_message(x), startup = TRUE)
   }
 
 }

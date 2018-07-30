@@ -1,23 +1,23 @@
-#' Update tidyverse packages
+#' Update tidytransit packages
 #'
-#' This will check to see if all tidyverse packages (and optionally, their
+#' This will check to see if all tidytransit packages (and optionally, their
 #' dependencies) are up-to-date, and will install after an interactive
 #' confirmation.
 #'
 #' @param recursive If \code{TRUE}, will also check all dependencies of
-#'   tidyverse packages.
+#'   tidytransit packages.
 #' @export
 #' @examples
 #' \dontrun{
-#' tidyverse_update()
+#' tidytransit_update()
 #' }
-tidyverse_update <- function(recursive = FALSE) {
+tidytransit_update <- function(recursive = FALSE) {
 
-  deps <- tidyverse_deps(recursive)
+  deps <- tidytransit_deps(recursive)
   behind <- dplyr::filter(deps, behind)
 
   if (nrow(behind) == 0) {
-    cli::cat_line("All tidyverse packages up-to-date")
+    cli::cat_line("All tidytransit packages up-to-date")
     return(invisible())
   }
 
@@ -34,21 +34,20 @@ tidyverse_update <- function(recursive = FALSE) {
   invisible()
 }
 
-#' List all tidyverse dependencies
+#' List all tidytransit dependencies
 #'
 #' @param recursive If \code{TRUE}, will also list all dependencies of
-#'   tidyverse packages.
+#'   tidytransit packages.
 #' @export
-tidyverse_deps <- function(recursive = FALSE) {
+tidytransit_deps <- function(recursive = FALSE) {
   pkgs <- utils::available.packages()
-  deps <- tools::package_dependencies("tidyverse", pkgs, recursive = recursive)
+  deps <- tools::package_dependencies("tidytransit", pkgs, recursive = recursive)
 
   pkg_deps <- unique(sort(unlist(deps)))
 
   base_pkgs <- c(
-    "base", "compiler", "datasets", "graphics", "grDevices", "grid",
-    "methods", "parallel", "splines", "stats", "stats4", "tools", "tcltk",
-    "utils"
+    "base", "dplyr", "tibble", "readr", "httr", "htmltools",
+    "magrittr", "stringr", "assertthat", "scales", "here"
   )
   pkg_deps <- setdiff(pkg_deps, base_pkgs)
 

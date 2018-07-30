@@ -1,6 +1,6 @@
 msg <- function(..., startup = FALSE) {
   if (startup) {
-    if (!isTRUE(getOption("tidyverse.quiet"))) {
+    if (!isTRUE(getOption("tidytransit.quiet"))) {
       packageStartupMessage(text_col(...))
     }
   } else {
@@ -24,20 +24,20 @@ text_col <- function(x) {
 
 }
 
-#' List all packages in the tidyverse
+#' List all packages in the tidytransit
 #'
-#' @param include_self Include tidyverse in the list?
+#' @param include_self Include tidytransit in the list?
 #' @export
 #' @examples
-#' tidyverse_packages()
-tidyverse_packages <- function(include_self = TRUE) {
-  raw <- utils::packageDescription("tidyverse")$Imports
+#' tidytransit_packages()
+tidytransit_packages <- function(include_self = TRUE) {
+  raw <- utils::packageDescription("tidytransit")$Imports
   imports <- strsplit(raw, ",")[[1]]
   parsed <- gsub("^\\s+|\\s+$", "", imports)
   names <- vapply(strsplit(parsed, "\\s+"), "[[", 1, FUN.VALUE = character(1))
 
   if (include_self) {
-    names <- c(names, "tidyverse")
+    names <- c(names, "tidytransit")
   }
 
   names
