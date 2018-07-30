@@ -11,6 +11,8 @@
 #' \dontrun{
 #' tidytransit_update()
 #' }
+#' @importFrom cli cat_line cat_bullet
+#' @importFrom dplyr filter
 tidytransit_update <- function(recursive = FALSE) {
 
   deps <- tidytransit_deps(recursive)
@@ -39,6 +41,8 @@ tidytransit_update <- function(recursive = FALSE) {
 #' @param recursive If \code{TRUE}, will also list all dependencies of
 #'   tidytransit packages.
 #' @export
+#' @importFrom purrr map2_lgl
+#' @importFrom tibble tibble
 tidytransit_deps <- function(recursive = FALSE) {
   pkgs <- utils::available.packages()
   deps <- tools::package_dependencies("tidytransit", pkgs, recursive = recursive)

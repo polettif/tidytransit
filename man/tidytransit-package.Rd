@@ -4,7 +4,7 @@
 \name{tidytransit-package}
 \alias{tidytransit}
 \alias{tidytransit-package}
-\title{tidytransit: Easily Install and Load packages to Work With the General Transit Feed Specification.}
+\title{tidytransit: Easily Install and Load packages to Work With the General Transit Feed Specification}
 \description{
 'tidytransit' is a set of packages that work in harmony
 because they work with a common data specification, namely
@@ -12,5 +12,9 @@ the General Transit Feed Specification (GTFS). This
 package is designed to make it easy to install and load multiple
 'tidytransit' packages in a single step. Learn more about 'tidytransit'
 at <https://r-transit.org>.
+}
+\author{
+\strong{Maintainer}: Tom Buckley \email{tom@tbuckl.com}
+
 }
 \keyword{internal}

@@ -8,6 +8,7 @@ msg <- function(..., startup = FALSE) {
   }
 }
 
+#' @importFrom rstudioapi hasFun isAvailable
 text_col <- function(x) {
   # If RStudio not available, messages already printed in black
   if (!rstudioapi::isAvailable()) {
@@ -49,7 +50,7 @@ invert <- function(x) {
   tapply(as.character(stacked$ind), stacked$values, list)
 }
 
-
+#' @importFrom crayon style
 style_grey <- function(level, ...) {
   crayon::style(
     paste0(...),

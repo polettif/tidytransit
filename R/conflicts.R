@@ -11,6 +11,8 @@
 #' @export
 #' @examples
 #' tidytransit_conflicts()
+#' @importFrom purrr set_names keep imap compact map
+#' @importFrom crayon bold
 tidytransit_conflicts <- function() {
   envs <- purrr::set_names(search())
   objs <- invert(lapply(envs, ls_env))

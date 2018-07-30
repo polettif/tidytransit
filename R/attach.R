@@ -9,7 +9,7 @@ core_unloaded <- function() {
   core[!search %in% search()]
 }
 
-
+#'@importFrom crayon bold green col_align
 tidytransit_attach <- function() {
   to_load <- core_unloaded()
   if (length(to_load) == 0)

@@ -1,4 +1,4 @@
 library(testthat)
-library(tidyverse)
+library(tidytransit)
 
-test_check("tidyverse")
+test_check("tidytransit")
